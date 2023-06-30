@@ -364,4 +364,5 @@ FodyWeavers.xsd
 Log.txt
 
 dxlib/
+cmake-build-debug/
 cmake-build-debug-visual-studio/
