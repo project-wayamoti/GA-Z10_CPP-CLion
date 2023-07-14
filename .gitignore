@@ -363,6 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 Log.txt
 
+.idea/
 dxlib/
 cmake-build-debug/
 cmake-build-debug-visual-studio/
