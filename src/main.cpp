@@ -55,6 +55,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         //球体移動処理 TRUE 塗りつぶし / FALSE 塗りつぶさない
         DrawCircle(pPos1.x, pPos1.y, pPos1.size, charaColor, TRUE);
         DrawCircle(pPos2.x, pPos2.y, pPos2.size, charaColor, TRUE);
+        //球体同士を線でつなげる
+        DrawLine(pPos1.x, pPos1.y, pPos2.x, pPos2.y, charaColor);
         moveCross(&pPos2, move, 1); // 十字キーでpPos2を移動させる
         moveCross(&pPos1, move, 2); // WASDキーでpPos1を移動させる
 
