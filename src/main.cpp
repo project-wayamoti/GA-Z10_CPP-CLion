@@ -1,7 +1,8 @@
 // 以下の行がないとコンパイルが通りません
 #pragma comment(linker, "/subsystem:windows")
 #include "DxLib.h"
-#include "option.h"
+#include "utils.h"
+#include "vector.h"
 
 //## 環境に応じて設定
 #define WIDTH 1280
@@ -30,6 +31,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // Vector2構造体の宣言
     // pPos1: 現在の座標, move: 移動量, moveVec: 移動ベクトル
     Vector2 pPos1, pPos2, move;
+    Vector2 TESTp, TESTm;
 
     // 移動物体初期設定
     pPos1.x = WIDTH / 2;  // 画面の中心に設定
@@ -40,6 +42,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     pPos2.size = 32;      // 移動物体のサイズ
     move.x = SPEED; // 移動物体移動数値
     move.y = SPEED;
+
+    //## ！！！実験用！！！
+    TESTp.x = 800;
+    TESTp.y = 600;
+    TESTp.size = 8;
+    TESTm.x = SPEED;
+    TESTm.y = SPEED;
+    //## ！！！実験用！！！
 
     // DXライブラリ初期化処理
     if (DxLib_Init() == -1) {
