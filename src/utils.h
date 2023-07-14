@@ -122,4 +122,42 @@ Vector2 getNormalizedVector(Vector2 V1) {
     return Vector2(V1.x, V1.y);
 };
 
+// ##### 操作オブジェクト移動処理 #####
+// 参考文献 : なし
+// 引数     : pPos, vec2, p
+// 戻り値   : なし
+// 注意     : pには1か2を入れる必要がある。1はpPos1、2はpPos2を操作する
+void moveCross(Vector2 *pVec2, Vector2 vec2, int p) {
+    if (p == 1) {
+        // 十字キーでpPos2を移動させる
+        if (CheckHitKey(KEY_INPUT_UP)) {
+            pVec2->y -= vec2.y;
+        }
+        if (CheckHitKey(KEY_INPUT_DOWN)) {
+            pVec2->y += vec2.y;
+        }
+        if (CheckHitKey(KEY_INPUT_LEFT)) {
+            pVec2->x -= vec2.x;
+        }
+        if (CheckHitKey(KEY_INPUT_RIGHT)) {
+            pVec2->x += vec2.x;
+        }
+    }
+    else if (p == 2) {
+        // WASDキーでpPos1を移動させる
+        if (CheckHitKey(KEY_INPUT_W)) {
+            pVec2->y -= vec2.y;
+        }
+        if (CheckHitKey(KEY_INPUT_S)) {
+            pVec2->y += vec2.y;
+        }
+        if (CheckHitKey(KEY_INPUT_A)) {
+            pVec2->x -= vec2.x;
+        }
+        if (CheckHitKey(KEY_INPUT_D)) {
+            pVec2->x += vec2.x;
+        }
+    }
+}
+
 #endif //UTILS_H
