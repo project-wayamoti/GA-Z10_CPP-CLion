@@ -10,6 +10,8 @@
 
 void moveWASD(Vector2 *pVector2, Vector2 vector2);
 
+void moveCross(Vector2 *pVector2, Vector2 vector2);
+
 using namespace std;
 
 // プログラムの最初はWinMainで始める
@@ -52,10 +54,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         //##### 中央物体の処理
         //球体移動処理 TRUE 塗りつぶし / FALSE 塗りつぶさない
         DrawCircle(pPos1.x, pPos1.y, pPos1.size, charaColor, TRUE);
+        DrawCircle(pPos2.x, pPos2.y, pPos2.size, charaColor, TRUE);
         // WASDキーでpPos1を移動させる
         moveWASD(&pPos1, move);
         // 十字キーでpPos2を移動させる
-        moveObject(&pPos1, move);
+        moveCross(&pPos2, move);
 
         //##### 描画処理
 
@@ -66,6 +69,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     DxLib_End(); // DX Libraryの使用を終了する処理
     return 0;    // ソフトを正常終了
+}
+
+void moveCross(Vector2 *pVector2, Vector2 vector2) {
+    // 十字キーでpPos2を移動させる
+    if (CheckHitKey(KEY_INPUT_UP)) {
+        pVector2->y -= vector2.y;
+    }
+    if (CheckHitKey(KEY_INPUT_DOWN)) {
+        pVector2->y += vector2.y;
+    }
+    if (CheckHitKey(KEY_INPUT_LEFT)) {
+        pVector2->x -= vector2.x;
+    }
+    if (CheckHitKey(KEY_INPUT_RIGHT)) {
+        pVector2->x += vector2.x;
+    }
 }
 
 // 移動処理
