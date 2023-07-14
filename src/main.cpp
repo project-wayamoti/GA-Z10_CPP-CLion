@@ -9,30 +9,12 @@
 #define SPEED 1 // 移動速度 60Hz=8, 300Hz=1
 using namespace std;
 
-void gameStop(int mode) {
-    switch (mode) {
-        case 0:
-            // ゲーム終了
-            printfDx("ゲーム終了 : ゲームクリア！\n");
-            break;
-        case 1:
-            // ゲーム終了
-            printfDx("ゲーム終了 : ゲームオーバー！\n");
-            break;
-    }
-    WaitKey();
-}
-
 // プログラムの最初はWinMainで始める
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
     //##### 初期設定 #####//
-    // ウィンドウモード設定
-    ChangeWindowMode(TRUE);
-
-    // 画面サイズ設定
+    // 画面設定
+    ChangeWindowMode(TRUE); // ウィンドウモード設定
     SetGraphMode(WIDTH, HEIGHT, 32);
-
-    // フレームレートの設定
     SetWaitVSyncFlag(TRUE); // 垂直同期を有効にする
 
     // DXライブラリ初期化処理
@@ -46,7 +28,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     // Vector2構造体の宣言
     // pos: 現在の座標, move: 移動量, moveVec: 移動ベクトル
-    Vector2 pos, move, moveVec;
+    Vector2 pos, move;
 
     // 移動物体初期設定
     pos.x = WIDTH / 2;  // 画面の中心に設定
@@ -54,8 +36,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     pos.size = 32;      // 移動物体のサイズ
     move.x = SPEED; // 移動物体移動数値
     move.y = SPEED;
-    moveVec.x = 1;      // 移動ベクトル
-    moveVec.y = 0;
 
     //##### メインループ（描画処理） #####//
     while (ProcessMessage() == 0) {
