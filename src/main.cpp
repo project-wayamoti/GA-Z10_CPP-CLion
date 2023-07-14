@@ -51,16 +51,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         // 画面の更新
         ClearDrawScreen();
 
-        //##### 中央物体の処理
-        //球体移動処理 TRUE 塗りつぶし / FALSE 塗りつぶさない
+        //##### 描画処理
+        //操作可能な球体の移動処理 TRUE 塗りつぶし / FALSE 塗りつぶさない
         DrawCircle(pPos1.x, pPos1.y, pPos1.size, charaColor, TRUE);
         DrawCircle(pPos2.x, pPos2.y, pPos2.size, charaColor, TRUE);
-        //球体同士を線でつなげる
+        //操作可能な球体同士を線でつなげる
         DrawLine(pPos1.x, pPos1.y, pPos2.x, pPos2.y, charaColor);
+
+        //##### 操作可能な球体の移動処理
         moveCross(&pPos2, move, 1); // 十字キーでpPos2を移動させる
         moveCross(&pPos1, move, 2); // WASDキーでpPos1を移動させる
-
-        //##### 描画処理
 
         // 画面の更新（必須）
         ScreenFlip(); // 画面を反転させる処理
