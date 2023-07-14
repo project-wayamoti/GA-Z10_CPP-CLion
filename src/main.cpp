@@ -7,6 +7,9 @@
 #define WIDTH 1280
 #define HEIGHT 720
 #define SPEED 1 // 移動速度 60Hz=8, 300Hz=1
+
+void moveWASD(Vector2 *pVector2, Vector2 vector2);
+
 using namespace std;
 
 // プログラムの最初はWinMainで始める
@@ -17,25 +20,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     SetGraphMode(WIDTH, HEIGHT, 32);
     SetWaitVSyncFlag(TRUE); // 垂直同期を有効にする
 
-    // DXライブラリ初期化処理
-    if (DxLib_Init() == -1) {
-        return -1; // エラーが起きたら直ちに終了
-    }
-
+    //## 型宣言
     //## 固有の設定
     // 色の設定
     unsigned int charaColor = GetColor(255, 255, 255);
 
     // Vector2構造体の宣言
-    // pos: 現在の座標, move: 移動量, moveVec: 移動ベクトル
-    Vector2 pos, move;
+    // pPos1: 現在の座標, move: 移動量, moveVec: 移動ベクトル
+    Vector2 pPos1, pPos2, move;
 
     // 移動物体初期設定
-    pos.x = WIDTH / 2;  // 画面の中心に設定
-    pos.y = HEIGHT / 2;
-    pos.size = 32;      // 移動物体のサイズ
+    pPos1.x = WIDTH / 2;  // 画面の中心に設定
+    pPos1.y = HEIGHT / 2;
+    pPos1.size = 32;      // 移動物体のサイズ
+    pPos2.x = WIDTH / 2;  // 画面の中心に設定
+    pPos2.y = HEIGHT / 2;
+    pPos2.size = 32;      // 移動物体のサイズ
     move.x = SPEED; // 移動物体移動数値
     move.y = SPEED;
+
+    // DXライブラリ初期化処理
+    if (DxLib_Init() == -1) {
+        return -1; // エラーが起きたら直ちに終了
+    }
 
     //##### メインループ（描画処理） #####//
     while (ProcessMessage() == 0) {
@@ -44,20 +51,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
         //##### 中央物体の処理
         //球体移動処理 TRUE 塗りつぶし / FALSE 塗りつぶさない
-        DrawCircle(pos.x, pos.y, pos.size, charaColor, TRUE);
-        // WASDキーでposを移動させる
-        if (CheckHitKey(KEY_INPUT_W)) {
-            pos.y -= move.y;
-        }
-        if (CheckHitKey(KEY_INPUT_S)) {
-            pos.y += move.y;
-        }
-        if (CheckHitKey(KEY_INPUT_A)) {
-            pos.x -= move.x;
-        }
-        if (CheckHitKey(KEY_INPUT_D)) {
-            pos.x += move.x;
-        }
+        DrawCircle(pPos1.x, pPos1.y, pPos1.size, charaColor, TRUE);
+        // WASDキーでpPos1を移動させる
+        moveWASD(&pPos1, move);
+        // 十字キーでpPos2を移動させる
+        moveObject(&pPos1, move);
 
         //##### 描画処理
 
@@ -68,4 +66,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     DxLib_End(); // DX Libraryの使用を終了する処理
     return 0;    // ソフトを正常終了
+}
+
+// 移動処理
+void moveWASD(Vector2 *pVector2, Vector2 vector2) {
+    // WASDキーでpPos1を移動させる
+    if (CheckHitKey(KEY_INPUT_W)) {
+        pVector2->y -= vector2.y;
+    }
+    if (CheckHitKey(KEY_INPUT_S)) {
+        pVector2->y += vector2.y;
+    }
+    if (CheckHitKey(KEY_INPUT_A)) {
+        pVector2->x -= vector2.x;
+    }
+    if (CheckHitKey(KEY_INPUT_D)) {
+        pVector2->x += vector2.x;
+    }
+
 }
