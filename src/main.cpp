@@ -7,12 +7,12 @@
 #define WIDTH 1280
 #define HEIGHT 720
 #define SPEED 1 // 移動速度 60Hz=8, 300Hz=1
-
-void moveWASD(Vector2 *pVector2, Vector2 vector2);
-
-void moveCross(Vector2 *pVector2, Vector2 vector2);
-
 using namespace std;
+
+//## プロトタイプ宣言
+
+// moveCross(移動ベクトル, 移動量, 移動対象)
+void moveCross(Vector2 *pVec2, Vector2 vec2, int p);
 
 // プログラムの最初はWinMainで始める
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -55,10 +55,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         //球体移動処理 TRUE 塗りつぶし / FALSE 塗りつぶさない
         DrawCircle(pPos1.x, pPos1.y, pPos1.size, charaColor, TRUE);
         DrawCircle(pPos2.x, pPos2.y, pPos2.size, charaColor, TRUE);
-        // WASDキーでpPos1を移動させる
-        moveWASD(&pPos1, move);
-        // 十字キーでpPos2を移動させる
-        moveCross(&pPos2, move);
+        moveCross(&pPos2, move, 1); // 十字キーでpPos2を移動させる
+        moveCross(&pPos1, move, 2); // WASDキーでpPos1を移動させる
 
         //##### 描画処理
 
@@ -71,36 +69,34 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     return 0;    // ソフトを正常終了
 }
 
-void moveCross(Vector2 *pVector2, Vector2 vector2) {
-    // 十字キーでpPos2を移動させる
-    if (CheckHitKey(KEY_INPUT_UP)) {
-        pVector2->y -= vector2.y;
+void moveCross(Vector2 *pVec2, Vector2 vec2, int p) {
+    if(p == 1){
+        // 十字キーでpPos2を移動させる
+        if (CheckHitKey(KEY_INPUT_UP)) {
+            pVec2->y -= vec2.y;
+        }
+        if (CheckHitKey(KEY_INPUT_DOWN)) {
+            pVec2->y += vec2.y;
+        }
+        if (CheckHitKey(KEY_INPUT_LEFT)) {
+            pVec2->x -= vec2.x;
+        }
+        if (CheckHitKey(KEY_INPUT_RIGHT)) {
+            pVec2->x += vec2.x;
+        }
+    }else if (p == 2){
+        // WASDキーでpPos1を移動させる
+        if (CheckHitKey(KEY_INPUT_W)) {
+            pVec2->y -= vec2.y;
+        }
+        if (CheckHitKey(KEY_INPUT_S)) {
+            pVec2->y += vec2.y;
+        }
+        if (CheckHitKey(KEY_INPUT_A)) {
+            pVec2->x -= vec2.x;
+        }
+        if (CheckHitKey(KEY_INPUT_D)) {
+            pVec2->x += vec2.x;
+        }
     }
-    if (CheckHitKey(KEY_INPUT_DOWN)) {
-        pVector2->y += vector2.y;
-    }
-    if (CheckHitKey(KEY_INPUT_LEFT)) {
-        pVector2->x -= vector2.x;
-    }
-    if (CheckHitKey(KEY_INPUT_RIGHT)) {
-        pVector2->x += vector2.x;
-    }
-}
-
-// 移動処理
-void moveWASD(Vector2 *pVector2, Vector2 vector2) {
-    // WASDキーでpPos1を移動させる
-    if (CheckHitKey(KEY_INPUT_W)) {
-        pVector2->y -= vector2.y;
-    }
-    if (CheckHitKey(KEY_INPUT_S)) {
-        pVector2->y += vector2.y;
-    }
-    if (CheckHitKey(KEY_INPUT_A)) {
-        pVector2->x -= vector2.x;
-    }
-    if (CheckHitKey(KEY_INPUT_D)) {
-        pVector2->x += vector2.x;
-    }
-
 }
